@@ -1500,34 +1500,39 @@ const Invoice: React.FC<InvoiceProps & { fromNomination?: boolean, isRecurring?:
   };
 
   const handleClearServices = () => {
-    // Clear all services and add default header with blank row
-    const defaultSection = {
-      id: generateUniqueId(),
-      description: "Port cost Services",
-      type: "category" as const,
-      lineItemType: "INVLI001",
-      discountAmount: 0,
-      invoiceLineItemId: null,
-      taxAmount: 0,
-      invoiceHeaderId: null,
-    };
-
-    const blankRow = {
-      id: generateUniqueId(),
-      description: "",
-      quantity: 1,
-      rate: 0.0,
-      amount: 0.0,
-      type: "service" as const,
-      lineItemType: "INVLI001",
-      discountAmount: 0,
-      invoiceLineItemId: null,
-      taxAmount: 0,
-      invoiceHeaderId: null,
-    };
-
-    setServiceItems([defaultSection, blankRow]);
+    // Clear all services
+    setServiceItems([]);
     setImportSource(false);
+    
+    // Only add default section and blank row if serviceItems becomes empty
+    if (serviceItems.length > 0) {
+      const defaultSection = {
+        id: generateUniqueId(),
+        description: "Port cost Services",
+        type: "category" as const,
+        lineItemType: "INVLI001",
+        discountAmount: 0,
+        invoiceLineItemId: null,
+        taxAmount: 0,
+        invoiceHeaderId: null,
+      };
+
+      const blankRow = {
+        id: generateUniqueId(),
+        description: "",
+        quantity: 1,
+        rate: 0.0,
+        amount: 0.0,
+        type: "service" as const,
+        lineItemType: "INVLI001",
+        discountAmount: 0,
+        invoiceLineItemId: null,
+        taxAmount: 0,
+        invoiceHeaderId: null,
+      };
+
+      setServiceItems([defaultSection, blankRow]);
+    }
   };
 
   useEffect(() => {
